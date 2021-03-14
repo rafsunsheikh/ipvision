@@ -136,6 +136,16 @@ public class AgentBAO {
         return new AgentResponseDTO.Builder(false).mg(Messages.AGENT_INVALID_USERNAME_OR_PASSWORD).rc(ReasonCode.USER_DID_NOT_FOUND).build();
     }
     
+    public AgentResponseDTO getStudentInfoFromStudentId(AgentAuthenticationDTO authDTO){
+        try{
+            AgentDAO.getInstance().checkStudentId(authDTO);
+            return new AgentResponseDTO.Builder(true).mg(Messages.STUDENT_INSERT_OR_UPDATE_SUCCESSFUL).rc(ReasonCode.STUDENT_INSERT_SUCCESS).build();
+        }catch(Exception e){
+            
+        }
+        
+        return new AgentResponseDTO.Builder(false).mg(Messages.STUDENT_INSERT_OR_UPDATE_UNSUCCESSFUL).rc(ReasonCode.STUDENT_INSERT_FAILURE).build();
+    }
     public AgentResponseDTO getAgentInfoFromUserIdAndPassword(AgentAuthenticationDTO authDTO) {
 
         try {

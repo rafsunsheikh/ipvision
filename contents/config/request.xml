@@ -5,7 +5,13 @@
         <class>com.coinmanagement.app.Index</class>
         <allow-method>GET</allow-method>
     </httprequest>
-   
+    
+    <httprequest>
+        <name>api/agent/student</name>
+        <class>com.coinmanagement.api.agent.StudentInfo</class>
+        <allow-method>POST</allow-method>
+    </httprequest>
+    
     <httprequest>
         <name>api/agent/transaction/getagentselltransactionhistory</name>
         <class>com.coinmanagement.api.agent.transaction.GetAgentSellTransactionHistory</class>

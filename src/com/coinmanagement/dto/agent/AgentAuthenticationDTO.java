@@ -2,6 +2,7 @@ package com.coinmanagement.dto.agent;
 
 import com.coinmanagement.utils.HashGeneratorUtils;
 import java.io.IOException;
+import student.Address;
 
 /**
  *
@@ -32,7 +33,36 @@ public class AgentAuthenticationDTO {
     private int coinCommission;
     private int goldCommission;
     private int apiType;
+    private int studentId;
+    private String studentName;
+    private String studentVillage;
+    private String studentPostOffice;
+    private String studentThana;
+    private String studentZilla;
+    private String studentCountry;
+    
+    Address studentAddress = new Address();
+    
+    
+    
+     public int getStudentId() {
+        return studentId;
+    }
 
+    public void setStudentId(int studentId){
+        this.studentId = studentId;
+    }
+    
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) throws IOException {
+        if (studentName == null || studentName.isEmpty()) {
+            throw new IOException("Name is required");
+        }
+        this.studentName = studentName;
+    }
     public String getName() {
         return name;
     }
@@ -42,6 +72,58 @@ public class AgentAuthenticationDTO {
             throw new IOException("Name is required");
         }
         this.name = name;
+    }
+
+    public String getStudentVillage() {
+        return studentVillage;
+    }
+
+    public void setStudentVillage(String studentVillage) throws IOException {
+        if (studentVillage == null || studentVillage.isEmpty()) {
+            throw new IOException("Name is required");
+        }
+        this.studentVillage = studentVillage;
+    }
+    
+    public String getStudentPostOffice() {
+        return studentPostOffice;
+    }
+
+    public void setStudentpostOffice(String studentPostOffice) throws IOException {
+        if (studentPostOffice == null || studentPostOffice.isEmpty()) {
+            throw new IOException("Name is required");
+        }
+        this.studentPostOffice = studentPostOffice;
+    }
+    public String getStudentThana() {
+        return studentThana;
+    }
+
+    public void setStudentThana(String studentThana) throws IOException {
+        if (studentThana == null || studentThana.isEmpty()) {
+            throw new IOException("Name is required");
+        }
+        this.studentThana = studentThana;
+    }
+    public String getStudentZilla() {
+        return studentZilla;
+    }
+
+    public void setStudentZilla(String studentZilla) throws IOException {
+        if (studentZilla == null || studentZilla.isEmpty()) {
+            throw new IOException("Name is required");
+        }
+        this.studentZilla = studentZilla;
+    }
+    public String getStudentCountry() {
+        return studentCountry;
+    }
+
+    public void setStudentCountry(String studentCountry) throws IOException {
+        if (studentCountry == null || studentCountry.isEmpty()) {
+            throw new IOException("Name is required");
+        }
+        this.studentCountry = studentCountry;
     }
 
     public String getPassword() {

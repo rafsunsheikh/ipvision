@@ -37,6 +37,111 @@ public class AgentDAO {
 
         return instance;
     }
+    
+    public void checkStudentId(AgentAuthenticationDTO authDTO) throws Exception {
+        DBConnection db = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        int studentId = authDTO.getStudentId();
+        String selectQuery = "SELECT studentId FROM student WHERE studentId = "+studentId+"";
+        int receivedStudentId = 0;
+        try {
+            db = DBConnector.getInstance().makeReadConnection();
+
+            stmt = db.connection.prepareStatement(selectQuery);
+            stmt.execute();
+
+            rs = stmt.getResultSet();
+
+            if (rs.next()) {
+                receivedStudentId = rs.getInt("studentId");
+                updateStudentInfo(authDTO);
+            }
+            else {
+                insertStudentInfo(authDTO);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeDBReadConnection(rs, stmt, db);
+        }
+    }
+    
+    public void updateStudentInfo(AgentAuthenticationDTO authDTO) throws Exception {
+        DBConnection db = null;
+        PreparedStatement stmt = null;
+        Savepoint transactionBegin = null;
+        ResultSet rs = null;
+        boolean output = false;
+        int studentId = authDTO.getStudentId();
+        
+        int index = 0;
+        
+        Timestamp createdTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
+        String insertQuery = "update student set NAME = ?, village = ?, postOffice = ?, thana = ?, zilla= ?, country = ? WHERE studentId = "+studentId+" ";
+
+        try {
+            db = DBConnector.getInstance().makeReadConnection();
+            db.connection.setAutoCommit(false);
+            
+            transactionBegin = db.connection.setSavepoint("TransactionBegin");
+            
+            stmt = db.connection.prepareStatement(insertQuery);
+            //stmt.setInt(++index, authDTO.getStudentId());
+            stmt.setString(++index, authDTO.getStudentName());
+            stmt.setString(++index, authDTO.getStudentVillage());
+            stmt.setString(++index, authDTO.getStudentPostOffice());
+            stmt.setString(++index, authDTO.getStudentThana());
+            stmt.setString(++index, authDTO.getStudentZilla());
+            stmt.setString(++index, authDTO.getStudentCountry());
+            stmt.executeUpdate();
+            db.connection.commit();
+            output = true;
+        } catch (Exception e) {
+            rollBackDBTransaction(db, transactionBegin);
+            throw e;
+        } finally {
+            closeDBWriteConnection(rs,stmt, db);
+        }
+    }
+    public void insertStudentInfo(AgentAuthenticationDTO authDTO) throws Exception {
+        DBConnection db = null;
+        PreparedStatement stmt = null;
+        Savepoint transactionBegin = null;
+        ResultSet rs = null;
+        boolean output = false;
+        
+        int index = 0;
+        
+        Timestamp createdTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
+        String insertQuery = "INSERT INTO student (studentId, name, village, postOffice, "
+                + "thana, zilla, country) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            db = DBConnector.getInstance().makeReadConnection();
+            db.connection.setAutoCommit(false);
+            
+            transactionBegin = db.connection.setSavepoint("TransactionBegin");
+            
+            stmt = db.connection.prepareStatement(insertQuery);
+            stmt.setInt(++index, authDTO.getStudentId());
+            stmt.setString(++index, authDTO.getStudentName());
+            stmt.setString(++index, authDTO.getStudentVillage());
+            stmt.setString(++index, authDTO.getStudentPostOffice());
+            stmt.setString(++index, authDTO.getStudentThana());
+            stmt.setString(++index, authDTO.getStudentZilla());
+            stmt.setString(++index, authDTO.getStudentCountry());
+            stmt.executeUpdate();
+            db.connection.commit();
+            output = true;
+        } catch (Exception e) {
+            rollBackDBTransaction(db, transactionBegin);
+            throw e;
+        } finally {
+            closeDBWriteConnection(rs,stmt, db);
+        }
+    }
+    
 
     public int validateUserId(String userId) throws Exception {
         DBConnection db = null;

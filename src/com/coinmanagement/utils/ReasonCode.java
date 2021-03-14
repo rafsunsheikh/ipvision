@@ -136,6 +136,8 @@ public class ReasonCode {
     public static final int INVALID_PRIVACY = 203;
     public static final int USER_BLOCKED = 204;
     public static final int ID_NOT_PROVIDED = 502;    
+    public static final int STUDENT_INSERT_SUCCESS= 0000;  
+    public static final int STUDENT_INSERT_FAILURE= 0001;
 
     /**
      * 16.11.2015

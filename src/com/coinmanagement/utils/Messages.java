@@ -86,5 +86,7 @@ public class Messages {
     public final static String DUPLICATE_REQUEST_FOR_TRANSACTION = "Duplicate refund request for transactionId - %d";
     public final static String DB_INSERTION_FAIL = "DB insertion failed";
     public final static String DB_INSERTION_SUCCESS = "DB insertion success";
+    public final static String STUDENT_INSERT_OR_UPDATE_SUCCESSFUL = "Successfully Inserted or updated";
+    public final static String STUDENT_INSERT_OR_UPDATE_UNSUCCESSFUL = "Insert or Update Failure;";
 
 }
